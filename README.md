@@ -51,16 +51,12 @@ Watchdog notifications are a wake-up aid; they do not block file writes. Periodi
 ├── requirements.txt
 ├── run.bat
 ├── run.command
-├── PROJECT_DOCUMENTATION.md
 ├── tests/
 │   ├── test_app.py
 │   ├── test_forensics.py
 │   ├── test_inventory.py
 │   └── test_long_monitoring.py
-├── docs/                             # Published PDFs and documentation index
 ├── screenshots/                      # Genuine app screenshots when available
-├── output/                           # Local/generated PDFs; ignored by Git
-├── tmp/                              # Local test logs and temporary renders; ignored
 └── watch_folder/                     # Local monitoring target; ignored
 ```
 
