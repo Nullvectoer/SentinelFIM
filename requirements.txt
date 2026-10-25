@@ -1,0 +1,4 @@
+PyQt6>=6.6
+watchdog>=4.0
+google-genai>=1.0
+keyring>=25.0
