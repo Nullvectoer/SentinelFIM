@@ -139,8 +139,7 @@ SentinelFIM is an educational defensive cybersecurity application for learning a
 
 ## Author
 
-**Author:** _Add your name or GitHub profile before publication._
-
+**Author:** Abhishek UM
 
 
 
