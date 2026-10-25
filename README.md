@@ -1,82 +1,113 @@
 # SentinelFIM
 
-**A local-first desktop file integrity monitor for Windows.** SentinelFIM creates a trusted file baseline, checks later scans against it, and helps you review unexpected changes with alerts, an inventory, and forensic details.
+<p align="center">
+  <strong>A desktop File Integrity Monitor for Windows</strong><br>
+  Establish a trusted file baseline, detect changes, and investigate the evidence.
+</p>
 
-> SentinelFIM is an educational defensive security project. It detects and reports file differences; it does not prevent changes or determine whether they are malicious.
+<p align="center">
+  <img alt="Platform: Windows" src="https://img.shields.io/badge/platform-Windows-0078D4?logo=windows&logoColor=white">
+  <img alt="Language: Python" src="https://img.shields.io/badge/language-Python-3776AB?logo=python&logoColor=white">
+  <img alt="Security: Defensive tool" src="https://img.shields.io/badge/use-defensive%20security-1F6FEB">
+  <img alt="License not specified" src="https://img.shields.io/badge/license-not%20specified-lightgrey">
+</p>
 
-## What it does
+SentinelFIM is a local desktop application for monitoring selected files and folders. It fingerprints files, compares later scans with a saved baseline, and presents changes for review through alerts, an inventory, and forensic details.
 
-- Fingerprints regular files with SHA-256 and SHA-512 while reading in 1 MiB chunks.
-- Detects created, tampered, deleted, and byte-identical renamed files.
-- Keeps scan errors distinct from deletions so inaccessible paths are not silently treated as removed.
-- Stores local baseline history in an HMAC-authenticated database using a key derived from a password with scrypt.
-- Provides a desktop dashboard, alert details, a nested file inventory, baseline management, and forensic review.
-- Optionally offers incident summaries through Gemini or a local Ollama service. AI analysis is user-triggered and advisory.
-- Uses Watchdog notifications to wake scans early; periodic scans recalculate hashes and determine findings.
+> **Scope:** SentinelFIM detects and reports differences. It does not prevent file changes or determine whether an event is malicious. It is an educational defensive security project, not a certified enterprise security platform.
 
-Monitoring runs only while the application is open. Watchdog notifications do not block file writes.
+## Features
+
+- **File integrity checks:** SHA-256 and SHA-512 fingerprints, calculated in 1 MiB chunks.
+- **Change classification:** created, tampered, deleted, verified rename, and unchanged files.
+- **Safer scan reporting:** scan errors are kept separate from deletions, so inaccessible paths are not automatically reported as removed.
+- **Local baseline history:** HMAC-SHA-256 authentication with a key derived from the user's password using scrypt.
+- **Investigation views:** desktop dashboard, alert details, nested file inventory, baseline management, and forensic review.
+- **Optional AI assistance:** user-triggered Gemini or local Ollama analysis. Results are advisory and separate from observed scan evidence.
+- **Responsive monitoring:** Watchdog notifications can wake scans early; periodic hash scans determine integrity findings.
+
+Monitoring is active only while SentinelFIM is running. Watchdog notifications do not block writes.
 
 ## Screenshots and demo
 
-Current screenshots and a demo video are not included in this checkout. The `screenshots/` directory explains how to capture and add genuine screenshots from the running application. No mock images are presented as product captures.
+Add genuine screenshots captured from the current application to [`screenshots/`](screenshots/README.md). The repository's screenshot guide lists the recommended captures. Avoid publishing personal paths, file contents, credentials, or baseline data.
 
 ## Requirements
 
 - Windows (the tested platform)
 - Python 3 with `venv` and `pip`
-- Internet access for the first dependency installation
+- Internet access for the initial dependency installation
 
-`run.bat` sets up a local virtual environment, installs dependencies when needed, and starts the application. macOS/Linux users can try `run.command`; those platforms have not been validated.
+The repository also includes `run.command` for macOS/Linux, but those platforms have not been validated.
 
 ## Quick start
 
-1. Download or clone this repository.
-2. On Windows, double-click `run.bat`, or use PowerShell:
+### Windows launcher
 
-   ```powershell
-   py -3 -m venv .venv
-   .\.venv\Scripts\python.exe -m pip install -r requirements.txt
-   .\.venv\Scripts\python.exe app.py
-   ```
+Download or clone the repository, then double-click `run.bat`. It creates a virtual environment if needed, installs dependencies, and launches the application.
 
-3. On first launch, create a baseline database password of at least 12 characters. The password is not saved. If you forget it, the existing database cannot be unlocked; reset starts a new database and preserves the old one as a locked backup.
-4. Select a file or folder, review monitoring settings, and start monitoring. The first successful scan creates a baseline if one does not already exist for that target.
+### Manual setup (PowerShell)
 
-For a safe demonstration, monitor a disposable folder and edit a test file. Review the resulting alert and inventory entry before accepting any changed state into a new baseline. Do not commit personal monitoring targets, baseline databases, preferences, or logs.
+```powershell
+py -3 -m venv .venv
+.\.venv\Scripts\python.exe -m pip install --upgrade pip
+.\.venv\Scripts\python.exe -m pip install -r requirements.txt
+.\.venv\Scripts\python.exe app.py
+```
 
-## How findings are produced
+On first launch, create a baseline database password of at least 12 characters. SentinelFIM does not save this password. If it is forgotten, the database cannot be unlocked; the reset workflow starts a new database and preserves the old database as a locked backup.
 
-1. SentinelFIM walks the selected target using normalized relative paths, subject to exclusions and configured limits.
-2. It calculates SHA-256 and SHA-512 hashes and compares the resulting inventory with the selected baseline.
-3. Matching files remain unchanged; new, changed, missing, and verified moved files receive separate classifications.
-4. Review findings in Alerts, System Inventory, or Forensic Analysis. Optional AI interpretation is separate from the recorded scan evidence.
+## First scan
 
-Coverage is bounded by configured exclusions, a 5,000-file cap, maximum file size, and text-diff limits. Review scan diagnostics for skipped or inaccessible content.
+1. Select a file or folder in **Dashboard** or **Baseline Manager**.
+2. Review recursion, exclusions, file-size limits, and other options in **Settings**.
+3. Start monitoring and wait for a successful scan. The first successful scan creates a baseline when none exists for the target.
+4. Review changes in **Alerts**, **System Inventory**, or **Forensic Analysis**.
+5. Save a new baseline only after reviewing and explicitly accepting the changed state.
 
-## Security notes
+For a safe demonstration, create a disposable folder and edit or remove a test file. Do not use important files as test data or commit personal monitoring targets, baseline databases, preferences, or logs.
 
-- HMAC authentication can reveal database edits when the password remains secret. The database is not encrypted, and a same-machine copy is not an independent trust anchor.
-- Inaccessible content cannot be verified. A scan warning is not proof that a file was deleted.
-- Gemini analysis is opt-in. When requested, selected incident evidence is sent to Google; file contents and unrelated alert history are not included. The response may be wrong. Gemini requires an API key and network access; Ollama requires a configured local service and model.
-- SentinelFIM is not antivirus, write protection, file recovery, network monitoring, or a centralized fleet-management service. No compliance certification is claimed.
+## How it works
+
+1. SentinelFIM walks the selected target using normalized relative paths, subject to configured exclusions and limits.
+2. Regular files are read in 1 MiB chunks while SHA-256 and SHA-512 fingerprints are calculated.
+3. The resulting inventory is compared with the selected baseline. Matching files remain unchanged; new, modified, missing, and verified moved files are classified separately.
+4. Findings and scan diagnostics are available for review. Optional AI interpretation uses selected incident evidence and does not replace the recorded scan results.
+
+Coverage is bounded by configured exclusions, a 5,000-file cap, a configurable maximum file size, and text-diff limits. Review scan diagnostics for skipped or inaccessible content.
+
+## Optional AI analysis
+
+AI analysis is disabled unless you configure and explicitly use it. Gemini requires an API key and network access; Ollama requires a local service and model. For Gemini, selected incident evidence is sent to Google; file contents and unrelated alert history are not included. Store credentials through the OS credential vault when available, and treat all AI output as advisory.
+
+## Security and limitations
+
+- HMAC authentication can reveal database edits when the password remains secret. The baseline database is **not encrypted**; a copy on the same machine is not an independent trust anchor.
+- Inaccessible files cannot be verified. A scan warning is not proof that a file was deleted.
+- SentinelFIM does not provide write prevention, file recovery, antivirus scanning, network monitoring, or user/process attribution.
+- It is a local desktop monitor, not a centralized fleet-management service. No PCI DSS, NIST, or other compliance certification is claimed.
+- Review documented coverage limits and testing scope in the [project documentation](PROJECT_DOCUMENTATION.md).
 
 ## Documentation
 
-- [Project guide (current)](docs/SentinelFIM_Project_Guide_Improved.pdf)
 - [Detailed project documentation](PROJECT_DOCUMENTATION.md)
-- [Documentation index and historical reports](docs/README.md)
-- [Screenshot capture guidance](screenshots/README.md)
+- [Project guide (PDF)](docs/SentinelFIM_Project_Guide_Improved.pdf)
+- [Documentation index](docs/README.md)
+- [Screenshot capture guide](screenshots/README.md)
+- [Security policy](SECURITY.md)
+- [Contributing](CONTRIBUTING.md)
 
-## Development
+## Development and tests
 
-Dependencies are listed in `requirements.txt`. The automated suite uses Python's standard-library `unittest`:
+Dependencies are listed in [`requirements.txt`](requirements.txt). Run the standard-library test suite with:
 
 ```powershell
 python -m unittest discover -s tests -v
 ```
 
-The documented test run covered 34 tests: 33 passed and one Windows symbolic-link integration test was skipped because the account lacked the required privilege. Live Gemini requests and actual ACL-denial integration were not tested. See the project documentation for test scope and limitations.
+The documented test run covered 34 tests: 33 passed and one Windows symbolic-link integration test was skipped because the account lacked the required privilege. Live Gemini requests and actual ACL-denial integration were not tested; see the project documentation for full scope.
 
 ## Author
 
 **Abhishek UM**
+
