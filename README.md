@@ -51,16 +51,12 @@ Watchdog notifications are a wake-up aid; they do not block file writes. Periodi
 ├── requirements.txt
 ├── run.bat
 ├── run.command
-├── PROJECT_DOCUMENTATION.md
 ├── tests/
 │   ├── test_app.py
 │   ├── test_forensics.py
 │   ├── test_inventory.py
 │   └── test_long_monitoring.py
-├── docs/                             # Published PDFs and documentation index
 ├── screenshots/                      # Genuine app screenshots when available
-├── output/                           # Local/generated PDFs; ignored by Git
-├── tmp/                              # Local test logs and temporary renders; ignored
 └── watch_folder/                     # Local monitoring target; ignored
 ```
 
@@ -111,15 +107,6 @@ At first launch, create a baseline database password of at least 12 characters. 
 
 Use a disposable folder to exercise TAMPERED, CREATED, and DELETED events. Do not use a personal `watch_folder/` as a public sample directory.
 
-## Testing
-
-The project uses `unittest`. Run all tests from the repository root:
-
-```powershell
-.\.venv\Scripts\python.exe -m unittest discover -s tests -v
-```
-
-Latest recorded run: **34 tests run, 33 passed, 0 failed, 1 skipped** (32.720 seconds). The skipped test attempts to create real Windows symbolic links and requires a privilege unavailable to the test account (WinError 1314). A separate unit test for rejecting symlinks passed. The suite covers nested scanning, duplicate relative paths, file change classification, inaccessible-path handling, inventory statuses, baseline authentication and first-scan deduplication, mocked AI success/failure paths, and a real local MonitorWorker/Watchdog run over repeated nested changes. A live Gemini request and actual Windows ACL denial were not tested. See [PROJECT_DOCUMENTATION.md](PROJECT_DOCUMENTATION.md) for detail.
 
 ## Security Considerations
 
@@ -138,12 +125,46 @@ Latest recorded run: **34 tests run, 33 passed, 0 failed, 1 skipped** (32.720 se
 - Text diffs are bounded. Binary and large files can show size/hash evidence without a text diff.
 - No PCI DSS, NIST, or other certification/compliance claim is made.
 
-## Documentation
+# SentinelFIM
 
-- [Current SentinelFIM Project Guide](docs/SentinelFIM_Project_Guide_Improved.pdf)
-- [Detailed project documentation](PROJECT_DOCUMENTATION.md)
-- [Documentation index and historical reports](docs/README.md)
-- [Screenshots still needed](screenshots/README.md)
+A Python desktop File Integrity Monitor (FIM) that records a trusted file baseline and compares later scans to identify file changes for review.
+
+<!-- PROJECT COVER IMAGE -->
+<p align="center">
+  <img src="screenshots/SentinelFIM-cover.png" alt="SentinelFIM cybersecurity project cover" width="850">
+</p>
+
+<p align="center">
+  <em>Project cover image — replace with your final cybersecurity-themed banner.</em>
+</p>
+
+## Project Demo Video
+
+<!-- Replace VIDEO_URL with your YouTube video or other publicly accessible demo link. -->
+
+<p align="center">
+  <a href="VIDEO_URL">
+    <img src="screenshots/SentinelFIM-video-thumbnail.png" alt="Watch the SentinelFIM project demonstration" width="750">
+  </a>
+</p>
+
+<p align="center">
+  <strong><a href="VIDEO_URL">▶ Watch the SentinelFIM Demo</a></strong>
+</p>
+
+*The demonstration video and thumbnail will be added here.*
+
+## Overview
+
+SentinelFIM helps users identify unexpected changes to selected files and folders through file fingerprinting, baseline comparison, alerts, inventory, and forensic review.
+
+
+
+
+## 
+Documentation
+
+- [Current SentinelFIM Project Guide](docs/SentinelFIM_Project_DOC.pdf)
 
 ## Disclaimer
 
@@ -151,8 +172,7 @@ SentinelFIM is an educational defensive cybersecurity application for learning a
 
 ## Author
 
-**Author:** _Add your name or GitHub profile before publication._
-
+**Author:** Abhishek UM
 
 
 
