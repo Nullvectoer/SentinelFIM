@@ -1,4 +1,4 @@
-# SentinelFIM
+# SentinelFIM HEAD
 
 A Python desktop File Integrity Monitor (FIM) that records a trusted file baseline and compares later scans to identify file changes for review.
 
@@ -155,3 +155,6 @@ SentinelFIM is an educational defensive cybersecurity application for learning a
 
 
 
+
+A Python-based File Integrity Monitoring (FIM) application for detecting file changes, monitoring filesystem activity, and supporting security investigations.
+>>>>>>> 03647cfbd3233c7a11d50d93b61d6417cf557e4b
