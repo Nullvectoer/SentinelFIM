@@ -140,19 +140,24 @@ A Python desktop File Integrity Monitor (FIM) that records a trusted file baseli
 
 ## Project Demo Video
 
-<!-- Replace VIDEO_URL with your YouTube video or other publicly accessible demo link. -->
-
 <p align="center">
-  <a href="VIDEO_URL">
-    <img src="screenshots/SentinelFIM-video-thumbnail.png" alt="Watch the SentinelFIM project demonstration" width="750">
+  <a href="screenshots/Video Project 7.mp4">
+    <img src="screenshots/screenshots/Analysis output 1.png"
+         alt="Watch the SentinelFIM demonstration"
+         width="800">
+  </a>
+</p>
+S
+<p align="center">
+  <a href="screenshots/Video%20Project%207.mp4">
+    <strong>▶ Watch the SentinelFIM Demo</strong>
   </a>
 </p>
 
 <p align="center">
-  <strong><a href="VIDEO_URL">▶ Watch the SentinelFIM Demo</a></strong>
+  <em>Demonstration of SentinelFIM's file integrity monitoring, alerts,
+  dashboard, and forensic analysis features.</em>
 </p>
-
-*The demonstration video and thumbnail will be added here.*
 
 ## Overview
 
