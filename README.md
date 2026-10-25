@@ -111,15 +111,6 @@ At first launch, create a baseline database password of at least 12 characters. 
 
 Use a disposable folder to exercise TAMPERED, CREATED, and DELETED events. Do not use a personal `watch_folder/` as a public sample directory.
 
-## Testing
-
-The project uses `unittest`. Run all tests from the repository root:
-
-```powershell
-.\.venv\Scripts\python.exe -m unittest discover -s tests -v
-```
-
-Latest recorded run: **34 tests run, 33 passed, 0 failed, 1 skipped** (32.720 seconds). The skipped test attempts to create real Windows symbolic links and requires a privilege unavailable to the test account (WinError 1314). A separate unit test for rejecting symlinks passed. The suite covers nested scanning, duplicate relative paths, file change classification, inaccessible-path handling, inventory statuses, baseline authentication and first-scan deduplication, mocked AI success/failure paths, and a real local MonitorWorker/Watchdog run over repeated nested changes. A live Gemini request and actual Windows ACL denial were not tested. See [PROJECT_DOCUMENTATION.md](PROJECT_DOCUMENTATION.md) for detail.
 
 ## Security Considerations
 
@@ -140,10 +131,7 @@ Latest recorded run: **34 tests run, 33 passed, 0 failed, 1 skipped** (32.720 se
 
 ## Documentation
 
-- [Current SentinelFIM Project Guide](docs/SentinelFIM_Project_Guide_Improved.pdf)
-- [Detailed project documentation](PROJECT_DOCUMENTATION.md)
-- [Documentation index and historical reports](docs/README.md)
-- [Screenshots still needed](screenshots/README.md)
+- [Current SentinelFIM Project Guide](SentinelFIM/blob/main/docs/SentinelFIM_Project_DOC.pdf)
 
 ## Disclaimer
 
