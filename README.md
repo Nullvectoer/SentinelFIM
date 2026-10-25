@@ -131,7 +131,7 @@ Use a disposable folder to exercise TAMPERED, CREATED, and DELETED events. Do no
 
 ## Documentation
 
-- [Current SentinelFIM Project Guide](SentinelFIM/blob/main/docs/SentinelFIM_Project_DOC.pdf)
+- [Current SentinelFIM Project Guide](docs/SentinelFIM_Project_DOC.pdf)
 
 ## Disclaimer
 
